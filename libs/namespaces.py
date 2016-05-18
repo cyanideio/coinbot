@@ -1,4 +1,5 @@
 from socketIO_client import BaseNamespace
+from settings import WATCH_LIST
 
 class CoinNamespace(BaseNamespace):
 
@@ -19,5 +20,5 @@ class CoinNamespace(BaseNamespace):
 	    self.parse_coin(detail, coin)
 
     def parse_coin(self, coin_msg, coin):
-	if coin == 'ETH':
+	if coin in WATCH_LIST:
             print coin_msg
