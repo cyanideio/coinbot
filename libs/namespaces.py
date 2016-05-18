@@ -1,9 +1,9 @@
 from socketIO_client import BaseNamespace
-import json
+
 class CoinNamespace(BaseNamespace):
 
     def on_connect(self):
-        print('[Connected]')
+        print('[CONNECTED]')
 
     def on_global(self, *args):
         self.parse_args(args, 'global')
