@@ -1,5 +1,6 @@
 from socketIO_client import BaseNamespace
-from settings import WATCH_LIST
+from settings import WATCH_LIST, PARAMS, ALT_TEMPLATE, BTC_TEMPLATE
+from colorama import Fore, Back, Style
 
 class CoinNamespace(BaseNamespace):
 
@@ -21,4 +22,21 @@ class CoinNamespace(BaseNamespace):
 
     def parse_coin(self, coin_msg, coin):
 	if coin in WATCH_LIST:
-            print coin_msg
+	    perc = float(coin_msg['perc'])
+	    vwapData = coin_msg['vwapData']
+	    cap24hrChange = float(coin_msg['cap24hrChange'])
+            supply = int(coin_msg['supply'])
+            vwapDataBTC = float(coin_msg['vwapDataBTC'])
+	    price = coin_msg['price']
+	    volume = float(coin_msg['volume'])
+            usdVolume = float(coin_msg['usdVolume'])
+	    mktcap = float(coin_msg['mktcap'])
+            TEMPLATE = BTC_TEMPLATE
+            SET =  (Fore.RED, coin, Fore.BLUE, price, Fore.GREEN, vwapData)
+            if coin != 'BTC':
+                delta = float(coin_msg['delta'])
+                cap24hrChangePercent = float(coin_msg['cap24hrChangePercent'])
+                capPercent = float(coin_msg['capPercent'])
+	        TEMPLATE = ALT_TEMPLATE
+	        SET = (Fore.RED, coin, capPercent, Fore.BLUE, price, Fore.GREEN, vwapData, Fore.YELLOW, delta)
+	    print TEMPLATE % SET
