@@ -10,8 +10,8 @@
 - `python run.py`
 
 ## Wiki & Documentation
-- Wiki
-- Documentation
+- [Wiki](https://github.com/cyanideio/coinbot/wiki/Wiki-Landing)
+- [Documentation](https://github.com/cyanideio/coinbot/wiki/Documentation-Landing)
 
 ## Param Explanation
 ### vwapData:
