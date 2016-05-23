@@ -1,6 +1,7 @@
 from socketIO_client import BaseNamespace
 from settings import WATCH_LIST, PARAMS, ALT_TEMPLATE, BTC_TEMPLATE
 from colorama import Fore, Back, Style
+import sqlite3
 
 class CoinNamespace(BaseNamespace):
 
