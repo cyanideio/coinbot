@@ -12,7 +12,7 @@ class BaseModel(Model):
         database = db
 
 class CoinCapTransaction(BaseModel):
-    market = CharField()         # Market on which the coin is traded
+    percent = DoubleField()      # Price Change in Percentage
     supply = DoubleField()       # Supply
     cap24hrChange = FloatField() # Cap Change in 24 Hours
     price =  DoubleField()       # Unit Price of the trade
@@ -29,6 +29,5 @@ class CoinCapBTCTrans(CoinCapTransaction):
 class CoinCapAltTrans(CoinCapTransaction):
     coinType = CharField()       # Type of the Virtual Coin
     delta = DoubleField()        # DeltaPrice
-    percent = DoubleField()      # Price Change in Percentage
     cap24hrChangePercent = FloatField()
     capPercent = FloatField()

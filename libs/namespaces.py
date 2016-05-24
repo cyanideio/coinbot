@@ -1,6 +1,7 @@
 from socketIO_client import BaseNamespace
 from settings import WATCH_LIST, PARAMS, ALT_TEMPLATE, BTC_TEMPLATE
 from colorama import Fore, Back, Style
+from utils.db.models import CoinCapBTCTrans, CoinCapAltTrans
 
 class CoinNamespace(BaseNamespace):
     """Namespace for CoinCap API
@@ -56,6 +57,33 @@ class CoinNamespace(BaseNamespace):
                     Fore.BLUE, price, 
                     Fore.GREEN, vwapData, 
                     Fore.YELLOW, delta
+                ) 
+
+                CoinCapAltTrans.create(
+                    coinType = coin,
+                    percent = perc,
+                    vWAP = vwapData,
+                    vWAPBTC = vwapDataBTC,
+                    marketCap = mktcap,
+                    volume = volume,
+                    price = price,
+                    cap24hrChange = cap24hrChange,  
+                    supply = supply,
+                    delta = delta,
+                    cap24hrChangePercent = cap24hrChangePercent,
+                    capPercent = capPercent
+                )
+
+            else:
+                CoinCapBTCTrans.create(
+                    percent = perc,
+                    vWAP = vwapData,
+                    vWAPBTC = vwapDataBTC,
+                    marketCap = mktcap,
+                    volume = volume,
+                    price = price,
+                    cap24hrChange = cap24hrChange,  
+                    supply = supply
                 ) 
 
             # Output Data
