@@ -1,3 +1,4 @@
+DB = 'trade.db'
 COIN_CAP_HOST = 'http://socket.coincap.io'
 COIN_CAP_PORT = 80
 WATCH_LIST = ['ETH', 'BTC', 'SC']
