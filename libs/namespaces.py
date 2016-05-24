@@ -3,7 +3,9 @@ from settings import WATCH_LIST, PARAMS, ALT_TEMPLATE, BTC_TEMPLATE
 from colorama import Fore, Back, Style
 
 class CoinNamespace(BaseNamespace):
-
+"""
+    Namespace for CoinCap API
+"""
     def on_connect(self):
         print('[CONNECTED]')
 
@@ -32,7 +34,11 @@ class CoinNamespace(BaseNamespace):
             usdVolume = float(coin_msg['usdVolume'])
             mktcap = float(coin_msg['mktcap'])
             TEMPLATE = BTC_TEMPLATE
-            SET =  (Fore.RED, coin, Fore.BLUE, price, Fore.GREEN, vwapData)
+            SET =  (
+                Fore.RED, coin, 
+                Fore.BLUE, price, 
+                Fore.GREEN, vwapData
+            )
             if coin != 'BTC':
                 delta = float(coin_msg['delta'])
                 cap24hrChangePercent = float(coin_msg['cap24hrChangePercent'])
