@@ -1,7 +1,6 @@
 from socketIO_client import BaseNamespace
 from settings import WATCH_LIST, PARAMS, ALT_TEMPLATE, BTC_TEMPLATE
 from colorama import Fore, Back, Style
-import sqlite3
 
 class CoinNamespace(BaseNamespace):
 
@@ -39,5 +38,10 @@ class CoinNamespace(BaseNamespace):
                 cap24hrChangePercent = float(coin_msg['cap24hrChangePercent'])
                 capPercent = float(coin_msg['capPercent'])
                 TEMPLATE = ALT_TEMPLATE
-                SET = (Fore.RED, coin, capPercent, Fore.BLUE, price, Fore.GREEN, vwapData, Fore.YELLOW, delta)
+                SET = (
+                    Fore.RED, coin, capPercent, 
+                    Fore.BLUE, price, 
+                    Fore.GREEN, vwapData, 
+                    Fore.YELLOW, delta
+                )
             print TEMPLATE % SET
