@@ -10,6 +10,7 @@ from utils.db.models import db, CoinCapBTCTrans, CoinCapAltTrans
 # Initialize Color Library
 color_init()
 db.connect()
+
 try:
 	db.create_tables([CoinCapBTCTrans, CoinCapAltTrans])
 except Exception:

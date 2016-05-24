@@ -23,6 +23,8 @@ class CoinNamespace(BaseNamespace):
 
     def parse_coin(self, coin_msg, coin):
         if coin in WATCH_LIST:
+
+            # Process Data from CoinCap API
             perc = float(coin_msg['perc'])
             vwapData = coin_msg['vwapData']
             cap24hrChange = float(coin_msg['cap24hrChange'])
@@ -33,16 +35,21 @@ class CoinNamespace(BaseNamespace):
             usdVolume = float(coin_msg['usdVolume'])
             mktcap = float(coin_msg['mktcap'])
 
+            # For Printing
             TEMPLATE = BTC_TEMPLATE
             SET =  (
                 Fore.RED, coin, 
                 Fore.BLUE, price, 
                 Fore.GREEN, vwapData
             )
+
             if coin != 'BTC':
+                # Process Data from CoinCap API
                 delta = float(coin_msg['delta'])
                 cap24hrChangePercent = float(coin_msg['cap24hrChangePercent'])
                 capPercent = float(coin_msg['capPercent'])
+
+                # For Printing
                 TEMPLATE = ALT_TEMPLATE
                 SET = (
                     Fore.RED, coin, capPercent, 
@@ -50,4 +57,6 @@ class CoinNamespace(BaseNamespace):
                     Fore.GREEN, vwapData, 
                     Fore.YELLOW, delta
                 ) 
+
+            # Output Data
             print TEMPLATE % SET
