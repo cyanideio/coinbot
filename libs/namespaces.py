@@ -3,9 +3,8 @@ from settings import WATCH_LIST, PARAMS, ALT_TEMPLATE, BTC_TEMPLATE
 from colorama import Fore, Back, Style
 
 class CoinNamespace(BaseNamespace):
-"""
-    Namespace for CoinCap API
-"""
+    """Namespace for CoinCap API
+    """
     def on_connect(self):
         print('[CONNECTED]')
 

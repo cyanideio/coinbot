@@ -10,4 +10,7 @@ class BaseModel(Model):
         database = db
 
 class Transaction(BaseModel):
-    username = CharField(unique=True)
+	coin_type = CharField()      # Type of the Virtual Coin
+	market = CharField()	     # Market on which the coin is traded
+	price =  DoubleField()       # Unit Price of the trade
+	volume = DoubleField()       # Volume of the Trade
