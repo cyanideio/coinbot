@@ -2,6 +2,7 @@ from socketIO_client import BaseNamespace
 from settings import WATCH_LIST, PARAMS, ALT_TEMPLATE, BTC_TEMPLATE
 from colorama import Fore, Back, Style
 from utils.db.models import CoinCapBTCTrans, CoinCapAltTrans
+from utils.db.methods import GetHighestPrice
 
 class CoinNamespace(BaseNamespace):
     """Namespace for CoinCap API
@@ -44,6 +45,10 @@ class CoinNamespace(BaseNamespace):
                 Fore.GREEN, vwapData
             )
 
+            H = GetHighestPrice('coincap', coin, 20*60).price
+            KEY = (price - H) / H * 100
+            print "%s%%" % KEY
+
             if coin != 'BTC':
                 # Process Data from CoinCap API
                 delta = float(coin_msg['delta'])
@@ -73,7 +78,6 @@ class CoinNamespace(BaseNamespace):
                     cap24hrChangePercent = cap24hrChangePercent,
                     capPercent = capPercent
                 )
-
             else:
                 CoinCapBTCTrans.create(
                     percent = perc,
@@ -85,6 +89,5 @@ class CoinNamespace(BaseNamespace):
                     cap24hrChange = cap24hrChange,  
                     supply = supply
                 ) 
-
             # Output Data
             print TEMPLATE % SET
