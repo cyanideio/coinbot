@@ -32,6 +32,7 @@ class CoinNamespace(BaseNamespace):
             volume = float(coin_msg['volume'])
             usdVolume = float(coin_msg['usdVolume'])
             mktcap = float(coin_msg['mktcap'])
+
             TEMPLATE = BTC_TEMPLATE
             SET =  (
                 Fore.RED, coin, 
@@ -48,5 +49,5 @@ class CoinNamespace(BaseNamespace):
                     Fore.BLUE, price, 
                     Fore.GREEN, vwapData, 
                     Fore.YELLOW, delta
-                )
+                ) 
             print TEMPLATE % SET
