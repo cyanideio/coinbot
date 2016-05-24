@@ -10,7 +10,10 @@ from utils.db.models import db, CoinCapBTCTrans, CoinCapAltTrans
 # Initialize Color Library
 color_init()
 db.connect()
-db.create_tables([CoinCapBTCTrans, CoinCapAltTrans])
+try:
+	db.create_tables([CoinCapBTCTrans, CoinCapAltTrans])
+except Exception:
+	print "[USING EXISITNG TABLE]"
 
 coin_socketIO = SocketIO(COIN_CAP_HOST, COIN_CAP_PORT, CoinNamespace)
 coin_socketIO.wait()
