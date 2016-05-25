@@ -45,9 +45,12 @@ class CoinNamespace(BaseNamespace):
                 Fore.GREEN, vwapData
             )
 
-            H = GetHighestPrice('coincap', coin, 20*60).price
-            KEY = (price - H) / H * 100
-            print "%s%%" % KEY
+            try:
+                H = GetHighestPrice('coincap', coin, 20*60).price
+                KEY = (price - H) / H * 100
+                print "%s%%" % KEY
+            except Exception:
+                print "SQL Error"
 
             if coin != 'BTC':
                 # Process Data from CoinCap API
