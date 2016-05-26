@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 def trading(price,KEY,BuyingPoint,SellgingPoint1,SellingPoint2,AccountAmount):
-      if  KEY >= BuyingPoint:
+      if  KEY <= BuyingPoint:
         if AccountAmount!=0:
            volume=AccountAmount/price
            BuyingPrice=price
