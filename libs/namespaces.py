@@ -51,7 +51,12 @@ class CoinNamespace(BaseNamespace):
                 print "%s%%" % KEY
             except Exception:
                 print "SQL Error"
-
+            try:
+                Amount=trading(price,KEY,-0.02,1.1,0.98,AccountAmount=1000)
+                print Amount
+            except Exception:
+                print "SQL Error"
+                
             if coin != 'BTC':
                 # Process Data from CoinCap API
                 delta = float(coin_msg['delta'])
