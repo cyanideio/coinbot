@@ -1,4 +1,7 @@
 import requests
+import time
+
+TICKER_KEYS = ['sell', 'buy', 'last', 'vol', 'high', 'low']
 
 class BaseTicker(object):
     """docstring for ClassName"""
@@ -8,10 +11,22 @@ class BaseTicker(object):
 
     def get_info(self, name):
         url = "%s%s.json" % (self.HOST, name)
-        r = requests.get(url)
+	try:
+            r = requests.get(url)
+	except Exception:
+            return False
         return r.json()
 
     def init(self):
-        markets = self.get_info('markets')
-        self.get_info('tickers')
-        print markets
+        self.markets = [str(m['id']) for m in self.get_info('markets')]
+
+    def tick(self, market='all'):
+        tick = self.get_info('tickers')
+        if tick:
+            for market in self.markets:
+                print market
+                print tick[market]['ticker']
+        else:
+            print "Network Error"
+	time.sleep(1)
+	self.tick()

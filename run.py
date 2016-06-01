@@ -24,3 +24,4 @@ from utils.db.models import db, CoinCapBTCTrans, CoinCapAltTrans
 
 yb = BaseTicker(YB_HOST)
 yb.init()
+yb.tick()
