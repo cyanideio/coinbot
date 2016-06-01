@@ -15,14 +15,17 @@ color_init()
 db.connect()
 
 try:
-	db.create_tables([CoinCapBTCTrans, CoinCapAltTrans])
-	db.create_tables([YunbiTrans])
+    db.create_tables([YunbiTrans])
+    db.create_tables([CoinCapBTCTrans, CoinCapAltTrans])
 except Exception:
 	print "[USING EXISITNG TABLE]"
 
-#coin_socketIO = SocketIO(COIN_CAP_HOST, COIN_CAP_PORT, CoinNamespace)
-#coin_socketIO.wait()
+# Input
+# CoinCap
+coin_socketIO = SocketIO(COIN_CAP_HOST, COIN_CAP_PORT, CoinNamespace)
+coin_socketIO.wait()
 
+# Yunbi
 yb = BaseTicker(YB_HOST)
 yb.init()
 yb.tick()

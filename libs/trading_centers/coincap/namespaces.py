@@ -2,7 +2,7 @@ from socketIO_client import BaseNamespace
 from settings import WATCH_LIST, PARAMS, ALT_TEMPLATE, BTC_TEMPLATE
 from colorama import Fore, Back, Style
 from utils.db.models import CoinCapBTCTrans, CoinCapAltTrans
-from utils.db.methods import GetHighestPrice
+# from utils.db.methods import GetHighestPrice
 
 class CoinNamespace(BaseNamespace):
     """Namespace for CoinCap API
@@ -38,34 +38,34 @@ class CoinNamespace(BaseNamespace):
             mktcap = float(coin_msg['mktcap'])
 
             # For Printing
-            TEMPLATE = BTC_TEMPLATE
-            SET =  (
-                Fore.RED, coin, 
-                Fore.BLUE, price, 
-                Fore.GREEN, vwapData
-            )
+            # TEMPLATE = BTC_TEMPLATE
+            # SET =  (
+            #     Fore.RED, coin, 
+            #     Fore.BLUE, price, 
+            #     Fore.GREEN, vwapData
+            # )
 
-            try:
-                H = GetHighestPrice('coincap', coin, 20*60).price
-                KEY = (price - H) / H * 100
-                print "%s%%" % KEY
-            except Exception:
-                print "SQL Error"
+            # try:
+            #     H = GetHighestPrice('coincap', coin, 20*60).price
+            #     KEY = (price - H) / H * 100
+            #     print "%s%%" % KEY
+            # except Exception:
+            #     print "SQL Error"
 
-            if coin != 'BTC':
+            # if coin != 'BTC':
                 # Process Data from CoinCap API
                 delta = float(coin_msg['delta'])
                 cap24hrChangePercent = float(coin_msg['cap24hrChangePercent'])
                 capPercent = float(coin_msg['capPercent'])
 
                 # For Printing
-                TEMPLATE = ALT_TEMPLATE
-                SET = (
-                    Fore.RED, coin, capPercent, 
-                    Fore.BLUE, price, 
-                    Fore.GREEN, vwapData, 
-                    Fore.YELLOW, delta
-                ) 
+                # TEMPLATE = ALT_TEMPLATE
+                # SET = (
+                #     Fore.RED, coin, capPercent, 
+                #     Fore.BLUE, price, 
+                #     Fore.GREEN, vwapData, 
+                #     Fore.YELLOW, delta
+                # ) 
 
                 CoinCapAltTrans.create(
                     coinType = "%s/usd" % coin,

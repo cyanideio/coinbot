@@ -19,6 +19,6 @@ def GetHighestPrice(market, coin, span):
         else:
             return (CoinCapAltTrans
                 .select()
-                .where((CoinCapAltTrans.timestamp >= spanAgo) & (CoinCapAltTrans.coinType == coin))
+                .where((CoinCapAltTrans.timestamp >= spanAgo) & (CoinCapAltTrans.coinType == "%s/usd" % coin))
                 .order_by(CoinCapAltTrans.price.desc())
                 .get())
