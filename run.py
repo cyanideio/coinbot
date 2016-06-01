@@ -8,17 +8,18 @@ from settings import COIN_CAP_HOST, COIN_CAP_PORT, YB_HOST
 from libs.trading_centers.coincap.namespaces import CoinNamespace
 from libs.trading_centers.yunbi.ticker import BaseTicker
 
-from utils.db.models import db, CoinCapBTCTrans, CoinCapAltTrans
+from utils.db.models import db, CoinCapBTCTrans, CoinCapAltTrans, YunbiTrans
 
 # Initialize Color Library
-#color_init()
-#db.connect()
-#
-#try:
-#	db.create_tables([CoinCapBTCTrans, CoinCapAltTrans])
-#except Exception:
-#	print "[USING EXISITNG TABLE]"
-#
+color_init()
+db.connect()
+
+try:
+	db.create_tables([CoinCapBTCTrans, CoinCapAltTrans])
+	db.create_tables([YunbiTrans])
+except Exception:
+	print "[USING EXISITNG TABLE]"
+
 #coin_socketIO = SocketIO(COIN_CAP_HOST, COIN_CAP_PORT, CoinNamespace)
 #coin_socketIO.wait()
 
