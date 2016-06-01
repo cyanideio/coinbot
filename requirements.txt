@@ -1,8 +1,10 @@
+autobahn==0.14.1
 colorama==0.3.7
 peewee==2.8.1
 requests==2.10.0
 six==1.10.0
 socketIO-client==0.6.5
+txaio==2.5.1
 websocket-client==0.37.0
 wheel==0.24.0
 wsgiref==0.1.2

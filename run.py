@@ -14,13 +14,16 @@ from utils.db.models import db, CoinCapBTCTrans, CoinCapAltTrans, YunbiTrans
 color_init()
 db.connect()
 
+# Initialize DataBase
 try:
     db.create_tables([YunbiTrans])
     db.create_tables([CoinCapBTCTrans, CoinCapAltTrans])
 except Exception:
 	print "[USING EXISITNG TABLE]"
 
+##########
 # Input
+##########
 # CoinCap
 coin_socketIO = SocketIO(COIN_CAP_HOST, COIN_CAP_PORT, CoinNamespace)
 coin_socketIO.wait()
@@ -29,3 +32,5 @@ coin_socketIO.wait()
 yb = BaseTicker(YB_HOST)
 yb.init()
 yb.tick()
+
+# Poloniex
