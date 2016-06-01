@@ -13,9 +13,9 @@ class BaseTicker(object):
         url = "%s%s.json" % (self.HOST, name)
 	try:
             r = requests.get(url)
+            return r.json()
 	except Exception:
             return False
-        return r.json()
 
     def init(self):
         self.markets = [str(m['id']) for m in self.get_info('markets')]
