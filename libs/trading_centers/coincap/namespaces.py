@@ -68,7 +68,7 @@ class CoinNamespace(BaseNamespace):
                 ) 
 
                 CoinCapAltTrans.create(
-                    coinType = coin,
+                    coinType = "%s/usd" % coin,
                     percent = perc,
                     vWAP = vwapData,
                     vWAPBTC = vwapDataBTC,
@@ -83,6 +83,7 @@ class CoinNamespace(BaseNamespace):
                 )
             else:
                 CoinCapBTCTrans.create(
+                    coinType = 'btc/usd',
                     percent = perc,
                     vWAP = vwapData,
                     vWAPBTC = vwapDataBTC,
@@ -93,4 +94,4 @@ class CoinNamespace(BaseNamespace):
                     supply = supply
                 ) 
             # Output Data
-            print TEMPLATE % SET
+            # print TEMPLATE % SET

@@ -1,5 +1,6 @@
 import requests
 import time
+from utils.db.models import YunbiTick
 
 TICKER_KEYS = ['sell', 'buy', 'last', 'vol', 'high', 'low']
 
@@ -24,8 +25,21 @@ class BaseTicker(object):
         tick = self.get_info('tickers')
         if tick:
             for market in self.markets:
-                print market
                 print tick[market]['ticker']
+                .create(
+                    coinType = coin,
+                    percent = perc,
+                    vWAP = vwapData,
+                    vWAPBTC = vwapDataBTC,
+                    marketCap = mktcap,
+                    volume = volume,
+                    price = price,
+                    cap24hrChange = cap24hrChange,  
+                    supply = supply,
+                    delta = delta,
+                    cap24hrChangePercent = cap24hrChangePercent,
+                    capPercent = capPercent
+                )
         else:
             print "Network Error"
 	time.sleep(1)
