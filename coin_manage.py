@@ -11,8 +11,7 @@ from libs.trading_centers.yunbi.ticker import BaseTicker
 from libs.trading_centers.poloniex.subscriber import BaseSubscriber, SubscribeTrollbox, SubscribeTicker
 
 from utils.db.models import db, CoinCapBTCTrans, CoinCapAltTrans, YunbiTrans, PoloniexTrans
-
-from multiprocessing import Process, Queue
+from utils.watcher import getPrice
 
 # Initialize Color Library
 color_init()
@@ -26,7 +25,11 @@ try:
 except Exception:
 	print "[USING EXISITNG TABLE]"
 
-market = sys.argv[1]
+try:
+	do = sys.argv[1]
+	target = sys.argv[2]
+except Exception:
+	print "Error"
 
 ####################
 # Market Input
@@ -52,13 +55,18 @@ def runYunbi():
 	yb.init()
 	yb.tick()
 
-if market == 'yunbi':
-	runYunbi()
+# Watch
+def watch():
+	print 'yunbi btc/sc', format(getPrice('yunbi', 'sc/cny') / getPrice('yunbi', 'btc/cny'), '.10f')
+	print 'polon btc/sc', format(getPrice('poloniex', 'btc/sc'), '.10f')
 
-if market == 'poloniex':
-	runPoloniex()
+if do == 'sync':
+	if target == 'yunbi':
+		runYunbi()
+	if target == 'poloniex':
+		runPoloniex()
+	if target == 'coincap':
+		runCoinCap()
 
-if market == 'coincap':
-	runCoinCap()
-
-print "Invalide Arg"
+if do == 'watch':
+	watch()
