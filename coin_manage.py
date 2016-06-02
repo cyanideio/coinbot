@@ -59,6 +59,8 @@ def runYunbi():
 def watch():
 	print 'yunbi btc/sc', format(getPrice('yunbi', 'sc/cny') / getPrice('yunbi', 'btc/cny'), '.10f')
 	print 'polon btc/sc', format(getPrice('poloniex', 'btc/sc'), '.10f')
+	print 'yunbi btc/cny', format(getPrice('yunbi', 'btc/cny'), '.10f')
+	print 'polon btc/usd', format(getPrice('poloniex', 'usdt/btc'), '.10f')
 
 if do == 'sync':
 	if target == 'yunbi':
