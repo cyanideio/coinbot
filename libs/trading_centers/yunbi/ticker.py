@@ -12,11 +12,11 @@ class BaseTicker(object):
 
     def get_info(self, name):
         url = "%s%s.json" % (self.HOST, name)
-	try:
-            r = requests.get(url)
-            return r.json()
-	except Exception:
-            return False
+        try:
+                r = requests.get(url)
+                return r.json()
+        except Exception:
+                return False
 
     def init(self):
         self.markets = [[str(m['id']),str(m['name'])] for m in self.get_info('markets')]
@@ -37,5 +37,5 @@ class BaseTicker(object):
                 )
         else:
             print "Network Error"
-	time.sleep(1)
-	self.tick()
+        time.sleep(1)
+        self.tick()

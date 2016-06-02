@@ -7,6 +7,7 @@ from settings import COIN_CAP_HOST, COIN_CAP_PORT, YB_HOST
 
 from libs.trading_centers.coincap.namespaces import CoinNamespace
 from libs.trading_centers.yunbi.ticker import BaseTicker
+from libs.trading_centers.poloniex.subscriber import BaseSubscriber, Subscribe2Trollbox
 
 from utils.db.models import db, CoinCapBTCTrans, CoinCapAltTrans, YunbiTrans
 
@@ -21,16 +22,19 @@ try:
 except Exception:
 	print "[USING EXISITNG TABLE]"
 
-##########
-# Input
-##########
-# CoinCap
-coin_socketIO = SocketIO(COIN_CAP_HOST, COIN_CAP_PORT, CoinNamespace)
-coin_socketIO.wait()
+####################
+# Market Input
+####################
 
-# Yunbi
-yb = BaseTicker(YB_HOST)
-yb.init()
-yb.tick()
+# CoinCap
+# coin_socketIO = SocketIO(COIN_CAP_HOST, COIN_CAP_PORT, CoinNamespace)
+# coin_socketIO.wait()
 
 # Poloniex
+BaseSubscriber.run(Subscribe2Trollbox)
+
+# Yunbi
+# yb = BaseTicker(YB_HOST)
+# yb.init()
+# yb.tick()
+

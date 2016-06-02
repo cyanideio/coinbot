@@ -52,7 +52,7 @@ class CoinNamespace(BaseNamespace):
             # except Exception:
             #     print "SQL Error"
 
-            # if coin != 'BTC':
+            if coin != 'BTC':
                 # Process Data from CoinCap API
                 delta = float(coin_msg['delta'])
                 cap24hrChangePercent = float(coin_msg['cap24hrChangePercent'])
