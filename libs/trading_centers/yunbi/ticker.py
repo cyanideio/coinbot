@@ -3,6 +3,7 @@ import time
 from utils.db.models import YunbiTrans
 
 TICKER_KEYS = ['sell', 'buy', 'last', 'vol', 'high', 'low']
+DEPED = ['notecny']
 
 class BaseTicker(object):
     """docstring for ClassName"""
@@ -25,7 +26,8 @@ class BaseTicker(object):
         tick = self.get_info('tickers')
         if tick:
             for market in self.markets:
-                try:
+                if market not in DEPED:
+                #try:
                     info = tick[market[0]]['ticker']
                     YunbiTrans.create(
                         coinType = market[1].lower(),
@@ -36,9 +38,9 @@ class BaseTicker(object):
                         high = info['high'],
                         low = info['low']
                     )
-                except Exception:
-                    print self.markets
-                    print "YunBi Error"
+                #except Exception:
+                #    print self.markets
+                #    print "YunBi Error"
         else:
             print "Network Error"
         time.sleep(1)
