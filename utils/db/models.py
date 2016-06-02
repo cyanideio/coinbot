@@ -37,3 +37,13 @@ class YunbiTrans(BaseModel):
     buy = DoubleField()
     high = DoubleField()
     low = DoubleField()
+
+class PoloniexTrans(BaseModel):
+    percent = DoubleField()      # Price Change in Percentage
+    lowestAsk = DoubleField()
+    highestBid = DoubleField()
+    quoteVolume = DoubleField()
+    mkt24hrHigh = DoubleField()
+    mkt24hrLow = DoubleField()
+
+

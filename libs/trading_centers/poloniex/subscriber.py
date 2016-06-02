@@ -1,13 +1,16 @@
+import logging, logging.handlers
 from twisted.internet.defer import inlineCallbacks
 from autobahn.twisted.wamp import ApplicationSession, ApplicationRunner
-import logging, logging.handlers
 from HTMLParser import HTMLParser
+
+from settings import POLONIEX_HOST, POLONIEX_REALM
+from utils.db.models import PoloniexTrans
 
 logging.basicConfig(format='%(message)s' ,level=logging.DEBUG)
 trolllogger = logging.getLogger()
 trolllogger.addHandler(logging.handlers.RotatingFileHandler('TrollBox.log', maxBytes=10**9, backupCount=5)) # makes 1Gb log files, 5 files max
 
-class Subscribe2Trollbox(ApplicationSession):
+class SubscribeTrollbox(ApplicationSession):
 	@inlineCallbacks
 	def onJoin(self, details):
 		h = HTMLParser()
@@ -19,4 +22,23 @@ class Subscribe2Trollbox(ApplicationSession):
 				logging.info('%s:%s:: -%s- %s' % (args[0].upper(), str(args[1]), args[2], h.unescape(args[3]) ))
 		yield self.subscribe(onTroll, 'trollbox')
 
-BaseSubscriber = ApplicationRunner(u"wss://api.poloniex.com:443", u"realm1")
+class SubscribeTicker(ApplicationSession):
+	@inlineCallbacks
+	def onJoin(self, details):
+		h = HTMLParser()
+		def onTick(*args):
+			PoloniexTrans.create(
+				coinType = args[0].lower().replace('_', '/'),
+				price = float(args[1]),
+				lowestAsk = float(args[2]),
+				highestBid = float(args[3]),
+				percent = float(args[4]),
+				volume = float(args[5]),
+				quoteVolume = float(args[6]),
+				mkt24hrHigh = float(args[8]),
+				mkt24hrLow = float(args[9])
+			)
+			logging.info(args)
+		yield self.subscribe(onTick, 'ticker')
+
+BaseSubscriber = ApplicationRunner(POLONIEX_HOST, POLONIEX_REALM)
