@@ -1,3 +1,3 @@
-python run.py yunbi &
-python run.py poloniex &
-python run.py coincap &
+python manage.py yunbi &
+python manage.py poloniex &
+python manage.py coincap &
