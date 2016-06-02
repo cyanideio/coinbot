@@ -25,16 +25,20 @@ class BaseTicker(object):
         tick = self.get_info('tickers')
         if tick:
             for market in self.markets:
-                info = tick[market[0]]['ticker']
-                YunbiTrans.create(
-                    coinType = market[1].lower(),
-                    price = info['last'],
-                    volume = info['vol'], 
-                    sell = info['sell'],
-                    buy = info['buy'],
-                    high = info['high'],
-                    low = info['low']
-                )
+                try:
+                    info = tick[market[0]]['ticker']
+                    YunbiTrans.create(
+                        coinType = market[1].lower(),
+                        price = info['last'],
+                        volume = info['vol'], 
+                        sell = info['sell'],
+                        buy = info['buy'],
+                        high = info['high'],
+                        low = info['low']
+                    )
+                except Exception:
+                    print self.markets
+                    print "YunBi Error"
         else:
             print "Network Error"
         time.sleep(1)

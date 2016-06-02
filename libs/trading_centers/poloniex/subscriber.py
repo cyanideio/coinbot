@@ -1,4 +1,4 @@
-import logging, logging.handlers
+# import logging, logging.handlers
 from twisted.internet.defer import inlineCallbacks
 from autobahn.twisted.wamp import ApplicationSession, ApplicationRunner
 from HTMLParser import HTMLParser
@@ -6,9 +6,9 @@ from HTMLParser import HTMLParser
 from settings import POLONIEX_HOST, POLONIEX_REALM
 from utils.db.models import PoloniexTrans
 
-logging.basicConfig(format='%(message)s' ,level=logging.DEBUG)
-trolllogger = logging.getLogger()
-trolllogger.addHandler(logging.handlers.RotatingFileHandler('TrollBox.log', maxBytes=10**9, backupCount=5)) # makes 1Gb log files, 5 files max
+# logging.basicConfig(format='%(message)s' ,level=logging.DEBUG)
+# trolllogger = logging.getLogger()
+# trolllogger.addHandler(logging.handlers.RotatingFileHandler('TrollBox.log', maxBytes=10**9, backupCount=5)) # makes 1Gb log files, 5 files max
 
 class SubscribeTrollbox(ApplicationSession):
 	@inlineCallbacks
@@ -38,7 +38,7 @@ class SubscribeTicker(ApplicationSession):
 				mkt24hrHigh = float(args[8]),
 				mkt24hrLow = float(args[9])
 			)
-			logging.info(args)
+			# logging.info(args)
 		yield self.subscribe(onTick, 'ticker')
 
 BaseSubscriber = ApplicationRunner(POLONIEX_HOST, POLONIEX_REALM)
