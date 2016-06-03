@@ -13,6 +13,12 @@ from libs.trading_centers.poloniex.subscriber import BaseSubscriber, SubscribeTr
 from utils.db.models import db, CoinCapBTCTrans, CoinCapAltTrans, YunbiTrans, PoloniexTrans
 from utils.watcher import getPrice
 
+from twisted.python import log
+from twisted.internet import reactor
+from autobahn.twisted.websocket import WebSocketServerFactory, WebSocketClientFactory
+from libs.websocket.server import SyncServerProtocol
+from libs.websocket.client import SyncClientProtocol
+
 # Initialize Color Library
 color_init()
 db.connect()
@@ -23,13 +29,13 @@ try:
     db.create_tables([YunbiTrans])
     db.create_tables([CoinCapBTCTrans, CoinCapAltTrans])
 except Exception:
-	print "[USING EXISITNG TABLE]"
+    print "[USING EXISITNG TABLE]"
 
 try:
-	do = sys.argv[1]
-	target = sys.argv[2]
+    do = sys.argv[1]
+    target = sys.argv[2]
 except Exception:
-	print "Error"
+    print "Error"
 
 ####################
 # Market Input
@@ -41,34 +47,51 @@ except Exception:
 
 # Poloniex
 def runPoloniex():
-	# BaseSubscriber.run(SubscribeTrollbox)
-	BaseSubscriber.run(SubscribeTicker)
+    # BaseSubscriber.run(SubscribeTrollbox)
+    BaseSubscriber.run(SubscribeTicker)
 
 # CoinCap
 def runCoinCap():
-	coin_socketIO = SocketIO(COIN_CAP_HOST, COIN_CAP_PORT, CoinNamespace)
-	coin_socketIO.wait()
+    coin_socketIO = SocketIO(COIN_CAP_HOST, COIN_CAP_PORT, CoinNamespace)
+    coin_socketIO.wait()
 
 # Yunbi
 def runYunbi():
-	yb = BaseTicker(YB_HOST)
-	yb.init()
-	yb.tickforever()
+    yb = BaseTicker(YB_HOST)
+    yb.init()
+    yb.tickforever()
 
 # Watch
 def watch():
-	print 'yunbi btc/sc', format(getPrice('yunbi', 'sc/cny') / getPrice('yunbi', 'btc/cny'), '.10f')
-	print 'polon btc/sc', format(getPrice('poloniex', 'btc/sc'), '.10f')
-	print 'yunbi btc/cny', format(getPrice('yunbi', 'btc/cny'), '.10f')
-	print 'polon btc/usd', format(getPrice('poloniex', 'usdt/btc'), '.10f')
+    print 'yunbi btc/sc', format(getPrice('yunbi', 'sc/cny') / getPrice('yunbi', 'btc/cny'), '.10f')
+    print 'polon btc/sc', format(getPrice('poloniex', 'btc/sc'), '.10f')
+    print 'yunbi btc/cny', format(getPrice('yunbi', 'btc/cny'), '.10f')
+    print 'polon btc/usd', format(getPrice('poloniex', 'usdt/btc'), '.10f')
+
+def start_ws_server():
+    factory = WebSocketServerFactory()
+    factory.protocol = SyncServerProtocol
+    reactor.listenTCP(9000, factory)
+    reactor.run()
+
+def start_ws_client():
+    factory = WebSocketClientFactory()
+    factory.protocol = SyncClientProtocol
+    reactor.connectTCP("127.0.0.1", 9000, factory)
+    reactor.run()
 
 if do == 'sync':
-	if target == 'yunbi':
-		runYunbi()
-	if target == 'poloniex':
-		runPoloniex()
-	if target == 'coincap':
-		runCoinCap()
+    if target == 'yunbi':
+        runYunbi()
+    if target == 'poloniex':
+        runPoloniex()
+    if target == 'coincap':
+        runCoinCap()
 
-if do == 'watch':
-	watch()
+if do == 'start':
+    if target == 'watch':
+        watch()
+    if target == 'wsserver':
+        start_ws_server()
+    if target == 'wsclient':
+        start_ws_client()
