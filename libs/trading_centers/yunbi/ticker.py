@@ -27,8 +27,10 @@ class BaseTicker(object):
         if tick:
             for market in self.markets:
                 if market not in DEPED:
-                #try:
-                    info = tick[market[0]]['ticker']
+                    try:
+                        info = tick[market[0]]['ticker']
+                    except Exception:
+                        continue
                     YunbiTrans.create(
                         coinType = market[1].lower(),
                         price = info['last'],
@@ -38,10 +40,12 @@ class BaseTicker(object):
                         high = info['high'],
                         low = info['low']
                     )
-                #except Exception:
                 #    print self.markets
                 #    print "YunBi Error"
         else:
             print "Network Error"
         time.sleep(1)
-        self.tick()
+
+    def tickforever(self):
+        while True:
+            self.tick()

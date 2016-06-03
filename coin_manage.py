@@ -53,7 +53,7 @@ def runCoinCap():
 def runYunbi():
 	yb = BaseTicker(YB_HOST)
 	yb.init()
-	yb.tick()
+	yb.tickforever()
 
 # Watch
 def watch():
