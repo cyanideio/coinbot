@@ -75,7 +75,7 @@ def start_ws_server():
     reactor.run()
 
 def start_ws_client():
-    factory = WebSocketClientFactory()
+    factory = WebSocketClientFactory("ws://localhost:9000/?sparam1=23")
     factory.protocol = SyncClientProtocol
     reactor.connectTCP("127.0.0.1", 9000, factory)
     reactor.run()

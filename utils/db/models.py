@@ -1,12 +1,28 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from settings import DB
+from settings import DB, USERDB
 from peewee import *
 from playhouse.sqlite_ext import SqliteExtDatabase
 import datetime
 
 db = SqliteExtDatabase(DB)
+user_db = SqliteExtDatabase(USERDB)
 
+##################
+# For User DB
+##################
+class User(Model):
+    is_super_user = BooleanField()
+    is_staff = BooleanField()
+    username = CharField()
+    password = CharField()
+    access_token = CharField()
+    class Meta:
+        database = user_db
+
+##################
+# For Exchange DB
+##################
 class BaseModel(Model):
     coinType = CharField()       # Type of the Virtual Coin
     price =  DoubleField()       # Unit Price of the trade
@@ -45,5 +61,3 @@ class PoloniexTrans(BaseModel):
     quoteVolume = DoubleField()
     mkt24hrHigh = DoubleField()
     mkt24hrLow = DoubleField()
-
-

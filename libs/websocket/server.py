@@ -4,6 +4,7 @@ class SyncServerProtocol(WebSocketServerProtocol):
 
     def onConnect(self, request):
         print("Client connecting: {}".format(request.peer))
+        print request.params
 
     def onOpen(self):
         print("WebSocket connection open.")
