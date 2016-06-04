@@ -14,9 +14,12 @@ user_db = SqliteExtDatabase(USERDB)
 class User(Model):
     is_super_user = BooleanField()
     is_staff = BooleanField()
-    username = CharField()
+    username = CharField(unique=True)
     password = CharField()
-    access_token = CharField()
+    access_token = CharField(unique=True)
+    created = DateTimeField(default=datetime.datetime.now)
+    last_login = DateTimeField(null=True)
+    last_ip = CharField()
     class Meta:
         database = user_db
 
@@ -28,7 +31,7 @@ class BaseModel(Model):
     price =  DoubleField()       # Unit Price of the trade
     volume = DoubleField()       # Volume of the Trade
     timestamp = DateTimeField(   # Now
-        default = datetime.datetime.now) 
+        default=datetime.datetime.now) 
     class Meta:
         database = db
 
