@@ -14,6 +14,7 @@ user_db = SqliteExtDatabase(USERDB)
 class User(Model):
     is_super_user = BooleanField()
     is_staff = BooleanField()
+    is_active = BooleanField(default=False)
     username = CharField(unique=True)
     password = CharField()
     access_token = CharField(unique=True)
