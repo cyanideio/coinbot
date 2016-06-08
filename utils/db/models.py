@@ -12,6 +12,7 @@ user_db = SqliteExtDatabase(USERDB)
 # For User DB
 ##################
 class User(Model):
+    salt = CharField()
     is_super_user = BooleanField()
     is_staff = BooleanField()
     is_active = BooleanField(default=False)
