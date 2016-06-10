@@ -13,15 +13,15 @@ user_db = SqliteExtDatabase(USERDB)
 ##################
 class User(Model):
     salt = CharField()
-    is_super_user = BooleanField()
-    is_staff = BooleanField()
+    is_super_user = BooleanField(default=False)
+    is_staff = BooleanField(default=False)
     is_active = BooleanField(default=False)
     username = CharField(unique=True)
     password = CharField()
-    access_token = CharField(unique=True)
+    access_token = CharField(unique=True, null=True)
     created = DateTimeField(default=datetime.datetime.now)
     last_login = DateTimeField(null=True)
-    last_ip = CharField()
+    last_ip = CharField(null=True)
     class Meta:
         database = user_db
 

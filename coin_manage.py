@@ -11,6 +11,8 @@ from libs.trading_centers.yunbi.ticker import BaseTicker
 from libs.trading_centers.poloniex.subscriber import BaseSubscriber, SubscribeTrollbox, SubscribeTicker
 
 from utils.db.models import db, CoinCapBTCTrans, CoinCapAltTrans, YunbiTrans, PoloniexTrans
+from utils.db.models import user_db, User
+
 from utils.watcher import getPrice
 
 from twisted.python import log
@@ -36,6 +38,15 @@ try:
     target = sys.argv[2]
 except Exception:
     print "Error"
+
+def init_user_db():
+    user_db.connect()
+
+    # Initialize DataBase
+    try:
+        db.create_tables([User])
+    except Exception:
+        print "[USING EXISITNG TABLE]"
 
 ####################
 # Market Input
@@ -79,6 +90,10 @@ def start_ws_client():
     factory.protocol = SyncClientProtocol
     reactor.connectTCP("127.0.0.1", 9000, factory)
     reactor.run()
+
+if do == 'initialize':
+    if target == 'user_db':
+        init_user_db()
 
 if do == 'sync':
     if target == 'yunbi':
