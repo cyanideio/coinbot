@@ -1,5 +1,6 @@
 *.pyc
 *.swp
 *.db
+*.rdb
 venv
 .DS_Store
