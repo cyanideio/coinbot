@@ -85,8 +85,8 @@ def start_ws_server():
     reactor.listenTCP(9000, factory)
     reactor.run()
 
-def start_ws_client():
-    factory = WebSocketClientFactory("ws://localhost:9000/?sparam1=23")
+def start_ws_client(url):
+    factory = WebSocketClientFactory(url)
     factory.protocol = SyncClientProtocol
     reactor.connectTCP("127.0.0.1", 9000, factory)
     reactor.run()
@@ -109,4 +109,8 @@ if do == 'start':
     if target == 'wsserver':
         start_ws_server()
     if target == 'wsclient':
-        start_ws_client()
+        try:
+            url = sys.argv[3]
+            start_ws_client(url)
+        except Exception:
+            print "error"
