@@ -27,7 +27,6 @@ class SubscribeTicker(ApplicationSession):
 	def onJoin(self, details):
 		h = HTMLParser()
 		def onTick(*args):
-			print args
 			PoloniexTrans.create(
 				coinType = args[0].lower().replace('_', '/'),
 				price = float(args[1]),
