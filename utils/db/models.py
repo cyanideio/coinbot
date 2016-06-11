@@ -4,9 +4,12 @@ from settings import DB, USERDB
 from peewee import *
 from playhouse.sqlite_ext import SqliteExtDatabase
 from playhouse.postgres_ext import PostgresqlExtDatabase
+from playhouse.db_url import connect
 import datetime
+import os
 
 db = PostgresqlExtDatabase(DB, user='coin_watcher', register_hstore=False)
+db = os.environ.get('DATABASE')
 user_db = SqliteExtDatabase(USERDB)
 
 ##################
