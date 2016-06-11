@@ -3,9 +3,10 @@
 from settings import DB, USERDB
 from peewee import *
 from playhouse.sqlite_ext import SqliteExtDatabase
+from playhouse.postgres_ext import PostgresqlExtDatabase
 import datetime
 
-db = SqliteExtDatabase(DB)
+db = PostgresqlExtDatabase(DB, user='coin_watcher')
 user_db = SqliteExtDatabase(USERDB)
 
 ##################

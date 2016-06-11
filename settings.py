@@ -1,4 +1,4 @@
-DB = 'trade.db'
+DB = 'trade'
 USERDB = 'user.db'
 
 WATCH_LIST = ['ETH', 'BTC', 'SC']
