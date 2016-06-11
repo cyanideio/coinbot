@@ -3,7 +3,7 @@ if [ $1 = 'sync' ]; then
         echo "SYNC START" 
         python coin_manage.py sync yunbi &
         python coin_manage.py sync poloniex &
-        python coin_manage.py sync coincap &
+        # python coin_manage.py sync coincap &
     fi
     if [ $2 = 'stop' ]; then
         echo "SYNC STOP"
