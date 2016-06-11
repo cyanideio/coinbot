@@ -1,15 +1,15 @@
 import sys
+import json
 from utils.db.auth_methods import token_auth
 from twisted.internet import reactor
 from twisted.python import log
 from twisted.web.server import Site
 from twisted.web.static import File
-from autobahn.twisted.websocket import WebSocketServerFactory, \
-    WebSocketServerProtocol, \
-    listenWS
+from autobahn.twisted.websocket import WebSocketServerFactory, WebSocketServerProtocol, listenWS
+from utils.watcher import getPrice
+
 
 class BroadcastServerProtocol(WebSocketServerProtocol):
-
     def onConnect(self, request):
         print("Client connecting: {}".format(request.peer))
         if 'key' not in request.params.keys():
@@ -56,12 +56,24 @@ class BroadcastServerFactory(WebSocketServerFactory):
     def __init__(self, url):
         WebSocketServerFactory.__init__(self, url)
         self.clients = []
-        self.tickcount = 0
         self.tick()
 
     def tick(self):
-        self.tickcount += 1
-        self.broadcast("tick %d from server" % self.tickcount)
+        RESULT = {
+            "markets": {
+            }
+        }
+        # self.tickcount += 1
+        yunbi_btc_sc = str(format(getPrice('yunbi', 'sc/cny') / getPrice('yunbi', 'btc/cny'), '.10f'))
+        polon_btc_sc = format(getPrice('poloniex', 'btc/sc'), '.10f')
+        yunbi_btc_cny = format(getPrice('yunbi', 'btc/cny'), '.10f')
+        polon_btc_usd = format(getPrice('poloniex', 'btc/usd'), '.10f')
+        RESULT['markets']['yunbi_btc/sc'] = yunbi_btc_sc
+        RESULT['markets']['polon_btc/sc'] = polon_btc_sc
+        RESULT['markets']['yunbi_btc/cny'] = yunbi_btc_cny
+        RESULT['markets']['polon_btc/usd'] = polon_btc_usd
+
+        self.broadcast(json.dumps(RESULT))
         reactor.callLater(1, self.tick)
 
     def register(self, client):
