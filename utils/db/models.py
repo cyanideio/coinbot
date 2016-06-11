@@ -8,8 +8,8 @@ from playhouse.db_url import connect
 import datetime
 import os
 
-db = PostgresqlExtDatabase(DB, user='coin_watcher', register_hstore=False)
-db = connect(os.environ.get('DATABASE'))
+# db = PostgresqlExtDatabase(DB, user='coin_watcher', register_hstore=False)
+db = connect(os.environ.get('DATABASE'), autorollback=True)
 user_db = SqliteExtDatabase(USERDB)
 
 ##################
