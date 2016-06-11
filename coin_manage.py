@@ -110,7 +110,7 @@ if do == 'start':
         try:
             url = sys.argv[3]
             start_ws_server(url)
-        except Exception:
+        except Exception, e:
             print "error"
     if target == 'wsclient':
         try:

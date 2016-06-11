@@ -67,7 +67,7 @@ class BroadcastServerFactory(WebSocketServerFactory):
         yunbi_btc_sc = str(format(getPrice('yunbi', 'sc/cny') / getPrice('yunbi', 'btc/cny'), '.10f'))
         polon_btc_sc = format(getPrice('poloniex', 'btc/sc'), '.10f')
         yunbi_btc_cny = format(getPrice('yunbi', 'btc/cny'), '.10f')
-        polon_btc_usd = format(getPrice('poloniex', 'btc/usd'), '.10f')
+        polon_btc_usd = format(getPrice('poloniex', 'usdt/btc'), '.10f')
         RESULT['markets']['yunbi_btc/sc'] = yunbi_btc_sc
         RESULT['markets']['polon_btc/sc'] = polon_btc_sc
         RESULT['markets']['yunbi_btc/cny'] = yunbi_btc_cny
