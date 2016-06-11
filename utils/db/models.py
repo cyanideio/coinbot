@@ -9,7 +9,7 @@ import datetime
 import os
 
 db = PostgresqlExtDatabase(DB, user='coin_watcher', register_hstore=False)
-db = os.environ.get('DATABASE')
+db = connect(os.environ.get('DATABASE'))
 user_db = SqliteExtDatabase(USERDB)
 
 ##################
