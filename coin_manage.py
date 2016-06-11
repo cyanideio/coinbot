@@ -88,7 +88,7 @@ def start_ws_server(url):
 def start_ws_client(url):
     factory = WebSocketClientFactory(url)
     factory.protocol = SyncClientProtocol
-    reactor.connectTCP("127.0.0.1", 9000, factory)
+    reactor.connectTCP("sync.vaul.tech", 9000, factory)
     reactor.run()
 
 if do == 'initialize':
@@ -110,7 +110,7 @@ if do == 'start':
         try:
             url = sys.argv[3]
             start_ws_server(url)
-        except Exception, e:
+        except Exception:
             print "error"
     if target == 'wsclient':
         try:

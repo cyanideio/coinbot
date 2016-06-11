@@ -34,7 +34,8 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
         # self.sendMessage(payload, isBinary)
         if not isBinary:
             msg = "{} from {}".format(payload.decode('utf8'), self.peer)
-            self.factory.broadcast(msg)
+            print msg
+            # self.factory.broadcast(msg)
         else:
             print("Binary message received: {} bytes".format(len(payload)))
 

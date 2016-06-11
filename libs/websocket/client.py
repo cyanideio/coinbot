@@ -3,7 +3,8 @@ from autobahn.twisted.websocket import WebSocketClientProtocol
 class SyncClientProtocol(WebSocketClientProtocol):
 
     def onOpen(self):
-        self.sendMessage(u"Hello, world!".encode('utf8'))
+        # self.sendMessage(u"Connected".encode('utf8'))
+        print "Connected !"
 
     def onMessage(self, payload, isBinary):
         if isBinary:
