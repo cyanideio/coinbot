@@ -17,8 +17,8 @@ from utils.watcher import getPrice
 
 from twisted.python import log
 from twisted.internet import reactor
-from autobahn.twisted.websocket import WebSocketServerFactory, WebSocketClientFactory
-from libs.websocket.server import SyncServerProtocol
+from autobahn.twisted.websocket import WebSocketClientFactory
+from libs.websocket.server import BroadcastServerProtocol, BroadcastServerFactory
 from libs.websocket.client import SyncClientProtocol
 
 # Initialize Color Library
@@ -79,9 +79,9 @@ def watch():
     print 'yunbi btc/cny', format(getPrice('yunbi', 'btc/cny'), '.10f')
     print 'polon btc/usd', format(getPrice('poloniex', 'usdt/btc'), '.10f')
 
-def start_ws_server():
-    factory = WebSocketServerFactory()
-    factory.protocol = SyncServerProtocol
+def start_ws_server(url):
+    factory = BroadcastServerFactory(url)
+    factory.protocol = BroadcastServerProtocol
     reactor.listenTCP(9000, factory)
     reactor.run()
 
@@ -107,7 +107,11 @@ if do == 'start':
     if target == 'watch':
         watch()
     if target == 'wsserver':
-        start_ws_server()
+        try:
+            url = sys.argv[3]
+            start_ws_server(url)
+        except Exception:
+            print "error"
     if target == 'wsclient':
         try:
             url = sys.argv[3]
